@@ -69,23 +69,23 @@ WSGI_APPLICATION = 'webDevelopmentAssignment_backend_july2021.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'webdevbackend',
-        'USER': 'postgres',
-        'PASSWORD': '123456789',
-        'HOST': 'localhost',
+        'NAME': 'df2jo8podscs4t',
+        'USER': 'xrexppdkuwgzop',
+        'PASSWORD': 'a8c6a7b1573bf757129a464e3493f33ea6fc170cf9d8f7103ac51563c6047698',
+        'HOST': 'ec2-54-83-82-187.compute-1.amazonaws.com',
     }
 }
 
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient"
-        },
-        "KEY_PREFIX": "example"
-    }
-}
+#CACHES = {
+#    "default": {
+#        "BACKEND": "django_redis.cache.RedisCache",
+#        "LOCATION": "redis://127.0.0.1:6379/1",
+#        "OPTIONS": {
+#            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+#        },
+#       "KEY_PREFIX": "example"
+#   }
+#}
 
 # Cache time to live is 15 minutes.
 CACHE_TTL = 60 * 15

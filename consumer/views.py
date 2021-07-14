@@ -16,11 +16,11 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 # Create your views here.
 
 # Cache lifetime
-CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
+#CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
 
 # homepage with cached paging for fast loading
-@cache_page(CACHE_TTL)
+#@cache_page(CACHE_TTL)
 def index(request):
     return render(request, "index.html")
 
