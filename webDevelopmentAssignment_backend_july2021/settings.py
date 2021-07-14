@@ -12,7 +12,7 @@ mimetypes.add_type("text/css", ".css", True)
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["iitb-task.herokuapp.com", "127.0.0.1"]
 
