@@ -1,8 +1,10 @@
+from rest_framework.generics import RetrieveAPIView
 from . import models
 from . import serializers
 from rest_framework import viewsets
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+
 
 
 # it is simply a viewset of class based views, which automatically determines urlconf for us
