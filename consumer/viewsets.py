@@ -16,3 +16,8 @@ class ClothesViewset(viewsets.ModelViewSet):
 class OutfitViewset(viewsets.ModelViewSet):
     queryset = models.Outfit.objects.all()
     serializer_class = serializers.OutfitSerializer
+
+@method_decorator(login_required(login_url="/api/login/"), name='dispatch')
+class TagViewset(RetrieveAPIView):
+    queryset = models.Clothes.objects.all()
+    serializer_class = serializers.TagSerializer

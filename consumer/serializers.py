@@ -18,6 +18,11 @@ class ClothesSerializer(serializers.ModelSerializer):
         read_only_fields = ['slug']
 
 
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Clothes
+        fields = '__all__'
+        read_only_fields = ['name', 'price', 'slug', 'category', 'desc', 'stock', 'image1', 'image2', 'image3', 'image4', 'image5', "slug"]
 
 
 # User Serializer

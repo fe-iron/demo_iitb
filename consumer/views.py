@@ -1,7 +1,5 @@
 from django.core import serializers
 from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
-
 from .models import Outfit, Clothes
 from django.conf import settings
 from knox.models import AuthToken
@@ -13,9 +11,9 @@ from rest_framework import generics, permissions
 from knox.views import LoginView as KnoxLoginView
 from django.views.decorators.cache import cache_page
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
-from .serializers import UserSerializer, RegisterSerializer, ClothesSerializer
+from .serializers import UserSerializer, RegisterSerializer
 from rest_framework.authtoken.serializers import AuthTokenSerializer
-
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -67,16 +65,49 @@ class LoginAPI(KnoxLoginView):
         return super(LoginAPI, self).post(request, format=None)
 
 
-
-# Clothes Tag API
-@csrf_exempt
-def filter(request):
-    if request.method == 'POST':
-        query = request.POST.get('query', None)
+@login_required(login_url="/api/login/")
+def filterTag(request):
+    '''
+    This method is for tag/name wise search
+    :param request: request
+    :return: Querysets
+    '''
+    if request.method == 'GET':
+        query = request.GET.get('query', None)
+        queries = query.split(" ")
         query_set = []
         clothes = Clothes.objects.all()
         for i in clothes:
-            if query in i.tag:
-                query_set.append(i)
+            for j in queries:
+                if j in i.category:
+                    try:
+                        query_set.index(i)
+                    except ValueError:
+                        query_set.append(i)
         query_set = serializers.serialize('json', query_set)
         return HttpResponse(query_set, content_type="application/json")
+
+
+@login_required(login_url="/api/login/")
+def filterCategory(request):
+    '''
+    This method is for category wise search
+    :param request: request
+    :return: Querysets
+    '''
+    if request.method == 'GET':
+        query = request.GET.get('query', None)
+        queries = query.split(" ")
+        query_set = []
+        clothes = Clothes.objects.all()
+        for i in clothes:
+            for j in queries:
+                if j in i.category:
+                    try:
+                        query_set.index(i)
+                    except ValueError:
+                        query_set.append(i)
+                # print("url: ", i.image1.url)
+        query_set = serializers.serialize('json', query_set)
+        return HttpResponse(query_set, content_type="application/json")
+
