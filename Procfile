@@ -1,1 +1,1 @@
-web: waitress-serve --port=$PORT webDevelopmentAssignment_backend_july2021.wsgi:application
+web: gunicorn webDevelopmentAssignment_backend_july2021.wsgi --log-file -
