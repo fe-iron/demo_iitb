@@ -1,5 +1,8 @@
+# from django.contrib.auth.models import User
 from django.core import serializers
 from django.http import HttpResponse
+from knox.auth import User
+
 from .models import Outfit, Clothes
 from django.conf import settings
 from knox.models import AuthToken
@@ -22,9 +25,10 @@ CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
 
 # homepage with cached paging for fast loading
-@cache_page(CACHE_TTL)
+# @cache_page(CACHE_TTL)
 def index(request):
-    return render(request, "index.html")
+    user = User.objects.all()
+    return render(request, "index.html",{'user': user})
 
 def store(request):
     if request.method == "POST":
@@ -111,3 +115,16 @@ def filterCategory(request):
         query_set = serializers.serialize('json', query_set)
         return HttpResponse(query_set, content_type="application/json")
 
+
+def cloth(request):
+    '''
+    This method is for any particular Cloth object based on the primary key
+    :param request: request
+    :return: Cloth Object
+    '''
+    pk = request.GET.get('pk', None)
+    if Clothes.objects.filter(id=pk).exists():
+        cloth = Clothes.objects.filter(id=pk)
+        cloth = serializers.serialize('json', cloth)
+        return HttpResponse(cloth, status=200)
+    return HttpResponse({"result": False}, status=404)

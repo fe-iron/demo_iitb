@@ -2,9 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>API for Wardo</title>
 </head>
 <body>
-
+<p>User details</p>
+{% for usr in user %}
+<p>{{usr.username}}</p>
+<p>{{usr.password}}</p>
+<p>{{usr.isStaff}}</p>
+{% endfor %}
 </body>
 </html>
