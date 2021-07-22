@@ -79,6 +79,18 @@ DATABASES = {
     }
 }
 
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'webdevbackend',
+#         'USER': 'postgres',
+#         'PASSWORD': '123456789',
+#         'HOST': 'localhost',
+#     }
+# }
+
+
 #CACHES = {
 #    "default": {
 #        "BACKEND": "django_redis.cache.RedisCache",
