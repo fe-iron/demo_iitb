@@ -127,4 +127,4 @@ def cloth(request):
         cloth = Clothes.objects.filter(id=pk)
         cloth = serializers.serialize('json', cloth)
         return HttpResponse(cloth, status=200)
-    return HttpResponse({"result": False}, status=404)
+    return HttpResponse({"response": "Result not found!"}, status=404)

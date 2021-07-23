@@ -14,7 +14,7 @@ class OutfitSerializer(serializers.ModelSerializer):
 class ClothesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Clothes
-        fields = ['name', 'price', 'tag', 'category', 'desc', 'stock', 'image1', 'image2', 'image3', 'image4', 'image5', "slug"]
+        fields = ['id','name', 'price', 'tag', 'category', 'desc', 'stock', 'image1', 'image2', 'image3', 'image4', 'image5', "slug"]
         read_only_fields = ['slug']
 
 
