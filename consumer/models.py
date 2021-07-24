@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
+from django.contrib.auth.models import User
 
 
 # This model is for the clothes itself
@@ -18,6 +19,7 @@ class Clothes(models.Model):
     image4      = models.ImageField(upload_to="photos/clothes/", default=None)
     image5      = models.ImageField(upload_to="photos/clothes/", default=None)
     slug        = models.CharField(max_length=200)
+    user        = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True)
 
     def __str__(self):
         return self.name

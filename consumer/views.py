@@ -6,8 +6,11 @@ from knox.auth import User
 from .models import Outfit, Clothes
 from django.conf import settings
 from knox.models import AuthToken
+from django.views.generic import ListView
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from django.contrib import messages
+from django.utils.decorators import method_decorator
 from django.contrib.auth import login
 from rest_framework.response import Response
 from rest_framework import generics, permissions
@@ -128,3 +131,42 @@ def cloth(request):
         cloth = serializers.serialize('json', cloth)
         return HttpResponse(cloth, status=200)
     return HttpResponse({"response": "Result not found!"}, status=404)
+
+
+@method_decorator(login_required(login_url="/api/login/"), name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
+class MyCloth(ListView):
+    def get(self, request, *args, **kwargs):
+        '''
+            This method is for any particular Cloth object based on the logged in user
+            :param request: request
+            :return: custom Cloth Object
+        '''
+        usr = request.user
+        # print(usr)
+        if Clothes.objects.filter(user=usr).exists():
+            cloth = Clothes.objects.filter(user=usr)
+            cloth = serializers.serialize('json', cloth)
+            return HttpResponse(cloth, status=200)
+        return HttpResponse({"Result not found!"}, status=404)
+
+    def post(self, request, *args, **kwargs):
+        usr = request.user
+        name = request.POST.get('name', None)
+        price = request.POST.get('price', None)
+        tag = request.POST.get('tag', None)
+        category = request.POST.get('category', None)
+        desc = request.POST.get('desc', None)
+        stock = request.POST.get('stock')
+        img1 = request.POST.get('image1', None)
+        img2 = request.POST.get('image2', None)
+        img3 = request.POST.get('image3', None)
+        img4 = request.POST.get('image4', None)
+        img5 = request.POST.get('image5', None)
+
+        cloth = Clothes(name=name, price=price, tag=tag, category=category, desc=desc, stock=stock, image1=img1, image2=img2,
+                        image3=img3, image4=img4, image5=img5, user=usr)
+        cloth.save()
+        # cloth = serializers.serialize('json', cloth)
+        return HttpResponse(cloth, content_type='application/json')
+
